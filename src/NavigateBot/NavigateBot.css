@@ -1,0 +1,18 @@
+.grid-bot {
+  margin: 100px 0 0;
+  display: block;
+}
+
+.row-bot {
+  height: 25px;
+}
+
+.pfv {
+  text-align: center;
+}
+
+.button-bot {
+  height: 50px;
+  width: 170px;
+  background-color: chartreuse;
+}

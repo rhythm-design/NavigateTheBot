@@ -1,0 +1,26 @@
+.node {
+  width: 25px;
+  height: 25px;
+  border: 1px solid red;
+  display: inline-block;
+}
+
+.node-finish {
+  background-color: black;
+}
+
+.node-start {
+  background-color: green;
+}
+
+.node-visited {
+  background-color: blueviolet;
+}
+
+.shortest-path {
+  background-color: rgb(245, 241, 14);
+}
+
+.node-wall {
+  background-color: #368b85;
+}
