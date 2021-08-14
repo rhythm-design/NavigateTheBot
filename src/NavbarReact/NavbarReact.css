@@ -1,3 +1,79 @@
 .navbar-custom-color{
     background-color: #DA0037;
 }
+navbar-logo-text{
+    font-family: "";
+}
+.navigate-button {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    color: #ffffff;
+    font-family: "Montserrat";
+    font-size: 1rem;
+    font-weight: 100;
+    padding: 3px;
+    background-color: #da0037;
+    border: solid #ffffff 3px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 3rem;
+    margin-left: 3rem;
+    width:12rem;
+}
+
+@-webkit-keyframes glowing {
+    0% { background-color: #368b85; -webkit-box-shadow: 0 0 3px #368b85; }
+    50% { background-color: #368b85; -webkit-box-shadow: 0 0 40px #368b85; }
+    100% { background-color: #368b85; -webkit-box-shadow: 0 0 3px #368b85; }
+  }
+  
+  @-moz-keyframes glowing {
+    0% { background-color: #368b85; -moz-box-shadow: 0 0 3px #368b85; }
+    50% { background-color: #368b85; -moz-box-shadow: 0 0 40px #368b85; }
+    100% { background-color: #368b85; -moz-box-shadow: 0 0 3px #368b85; }
+  }
+  
+  @-o-keyframes glowing {
+    0% { background-color: #368b85; box-shadow: 0 0 3px #368b85; }
+    50% { background-color: #368b85; box-shadow: 0 0 40px #368b85; }
+    100% { background-color: #368b85; box-shadow: 0 0 3px #368b85; }
+  }
+  
+  @keyframes glowing {
+    0% { background-color: #368b85; box-shadow: 0 0 3px #368b85; }
+    50% { background-color: #368b85; box-shadow: 0 0 40px #368b85; }
+    100% { background-color: #368b85; box-shadow: 0 0 3px #368b85; }
+  }
+  
+.navbar-text{
+    font-family: 'Montserrat', sans-serif;
+ }
+
+.nav-items-style{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.logo-photo{
+    margin-right: 0.5rem;
+}
+ 
+.logo-text{
+    margin-top: 3px;
+}
+
+.navbar-padding-corrected{
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
+.visualizeColor{
+    background-color: #368b85;
+    -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}

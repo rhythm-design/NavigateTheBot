@@ -1,7 +1,7 @@
 .node {
   width: 25px;
   height: 25px;
-  border: 1px solid red;
+  border: 1px solid #a2dbfa;
   display: inline-block;
 }
 

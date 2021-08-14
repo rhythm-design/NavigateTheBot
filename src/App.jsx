@@ -5,7 +5,6 @@ import NavbarReact from "./NavbarReact/NavbarReact";
 function App() {
   return( 
     <div>
-    <NavbarReact/>
   <NavigateBot />
   </div>
   );
