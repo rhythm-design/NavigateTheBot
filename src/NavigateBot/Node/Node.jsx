@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./Node.css";
 const Node = React.memo(   
   ({ col, isFinish, isStart, isWall, row, isVisited,onMouseDown,onMouseEnter,onMouseUp }) => {

@@ -77,3 +77,13 @@ navbar-logo-text{
   -o-animation: glowing 1500ms infinite;
   animation: glowing 1500ms infinite;
 }
+
+.dropdown-menu{
+  background-color: #990026;
+}
+.dropdown-item{
+  color:white;
+}
+.active{
+  
+}

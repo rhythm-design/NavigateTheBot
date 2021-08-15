@@ -1,16 +1,18 @@
 import React, { useState, useEffect ,useRef , useCallback} from "react";
 import _ from "lodash";
+
 import Node from "./Node/Node";
-import "./NavigateBot.css";
-import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
 import NavbarReact from "../NavbarReact/NavbarReact";
+import "./NavigateBot.css";
+
+import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
 
 const START_NODE_ROW = 5;
 const START_NODE_COL = 5;
 const FINISH_NODE_ROW = 8;
 const FINISH_NODE_COL = 22;
 const TOTAL_ROWS = 18;
-const TOTAL_COLS = 53;
+const TOTAL_COLS = 54;
 
 const NavigateBot = () => {
   const [nodeGrid, setNodeGrid] = useState({
@@ -26,11 +28,20 @@ const NavigateBot = () => {
   }, []);
 
   const handleMouseDown=useCallback((event,row,col)=>{
+        if (document.getElementById(`node-${row}-${col}`).className ==='node node-start'){
+          setNodeGrid((prevGrid)=>({
+            mouseIsPressed: true,
+            isStartNode: true,
+            currRow: row,
+            currCol: col,
+          }));
+        }
        setNodeGrid((prevGrid)=>({
          grid: getNewGridwithWallToggled(prevGrid.grid,row,col)
        }));
         mouseIsPressed.current=true;
         event.preventDefault();
+         
 
   },[]);
   const handleMouseEnter=useCallback((row,col)=>{
@@ -45,7 +56,8 @@ const NavigateBot = () => {
     mouseIsPressed.current = false;
   }, []);
 
-  const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {       
+  const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {  
+    console.log("Length" + visitedNodesInOrder.length);     
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
         if(i===visitedNodesInOrder.length){
           setTimeout(()=>{
@@ -53,13 +65,15 @@ const NavigateBot = () => {
           },10);
           return;
         }
+        console.log("insideLoop"+i);
       setTimeout(() => {
+        console.log("inside Time Out"+i);
         const node = visitedNodesInOrder[i];
         setNodeGrid((prevNodeGrid) => ({
           ...prevNodeGrid,
           grid: getNewGridWithVisited(prevNodeGrid.grid, node.row, node.col) // calls render
         }));
-      }, 10 );
+      }, 10);
     }
   };
 
@@ -72,7 +86,6 @@ const NavigateBot = () => {
      }
   };
 
-
   const visualizeDijkstra = () => {
     const grid = _.cloneDeep(nodeGrid.grid);
     // console.log(grid);
@@ -82,14 +95,53 @@ const NavigateBot = () => {
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);   
   };
+
+  const clearWall=()=>{
+    const newGrid = [...nodeGrid.grid];  
+    for(let row=0;row<TOTAL_ROWS;row++){
+      for(let col=0;col<TOTAL_COLS;col++){
+        
+        const node1 = newGrid[row][col];
+        const newNode = {
+          ...node1,
+          isWall: false ,
+          isVisited: false
+        };
+        newGrid[row][col]=newNode;
+      }
+    }
+    setNodeGrid((prevNodeGrid) => ({
+      ...prevNodeGrid,
+      grid: newGrid
+    }));  
+  }
+  const clearPath=()=>{
+    const newGrid = [...nodeGrid.grid];  
+    for(let row=0;row<TOTAL_ROWS;row++){
+      for(let col=0;col<TOTAL_COLS;col++){
+          const node1 = newGrid[row][col];
+        const newNode = {
+          ...node1,
+          isVisited: false 
+        };
+        newGrid[row][col]=newNode;
+      }
+    }
+    setNodeGrid((prevNodeGrid) => ({
+      ...prevNodeGrid,
+      grid: newGrid
+    }));  
+  }
+
+  const clearBoard=()=>{
+    window.location.reload(false);
+  };
+
+  //pfv
   return (
-    <div className="pfv">
-      {/* <button onClick={visualizeDijkstra} className="button-bot">
-        Visualize Dijkstra´s Algorithm
-      </button> */}
-      <NavbarReact visualizeDijkstra={visualizeDijkstra}/>
+    <div>                                                
+     <NavbarReact visualizeDijkstra={visualizeDijkstra} clearWall={clearWall} clearPath={clearPath} clearBoard={clearBoard} />
       <div className="grid-bot">
-      { console.log(nodeGrid.grid) }
         {nodeGrid.grid.map((row, rowIdx) => {
           return (
             <div className="row-bot"  key={rowIdx}>
@@ -166,3 +218,51 @@ const getNewGridwithWallToggled=(grid,row,col)=>{
   newGrid[row][col]=newNode;
   return newGrid;
 };
+
+// const dynamicStartNode=(grid,row,col)=>{
+//   if (!this.state.isRunning) {
+//     if (this.state.mouseIsPressed) {
+//       const nodeClassName = document.getElementById(`node-${row}-${col}`)
+//         .className;
+//       if (this.state.isStartNode) {
+//         console.log("Start changes");
+//         if (nodeClassName !== 'node node-wall') {
+//           const prevStartNode = this.state.grid[this.state.currRow][
+//             this.state.currCol
+//           ];
+//           prevStartNode.isStart = false;
+//           document.getElementById(
+//             `node-${this.state.currRow}-${this.state.currCol}`,
+//           ).className = 'node';
+
+//           this.setState({currRow: row, currCol: col});
+//           const currStartNode = this.state.grid[row][col];
+//           currStartNode.isStart = true;
+//           document.getElementById(`node-${row}-${col}`).className =
+//             'node node-start';
+//         }
+//         this.setState({START_NODE_ROW: row, START_NODE_COL: col});
+//       } else if (this.state.isFinishNode) {
+//         if (nodeClassName !== 'node node-wall') {
+//           const prevFinishNode = this.state.grid[this.state.currRow][
+//             this.state.currCol
+//           ];
+//           prevFinishNode.isFinish = false;
+//           document.getElementById(
+//             `node-${this.state.currRow}-${this.state.currCol}`,
+//           ).className = 'node';
+
+//           this.setState({currRow: row, currCol: col});
+//           const currFinishNode = this.state.grid[row][col];
+//           currFinishNode.isFinish = true;
+//           document.getElementById(`node-${row}-${col}`).className =
+//             'node node-finish';
+//         }
+//         this.setState({FINISH_NODE_ROW: row, FINISH_NODE_COL: col});
+//       } else if (this.state.isWallNode) {
+//         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
+//         this.setState({grid: newGrid});
+//       }
+//     }
+  
+// };
