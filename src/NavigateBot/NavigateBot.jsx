@@ -3,14 +3,16 @@ import _ from "lodash";
 
 import Node from "./Node/Node";
 import NavbarReact from "../NavbarReact/NavbarReact";
+// import Specifications from "../Specifications/Specifications.jsx";
 import "./NavigateBot.css";
 
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
+import {astar,getNodesInShortestPathOrderAstar} from "../algorithms/astar.js";
 
 const START_NODE_ROW = 5;
 const START_NODE_COL = 5;
-const FINISH_NODE_ROW = 8;
-const FINISH_NODE_COL = 22;
+const FINISH_NODE_ROW = 11;
+const FINISH_NODE_COL = 25;
 const TOTAL_ROWS = 18;
 const TOTAL_COLS = 54;
 
@@ -28,20 +30,11 @@ const NavigateBot = () => {
   }, []);
 
   const handleMouseDown=useCallback((event,row,col)=>{
-        if (document.getElementById(`node-${row}-${col}`).className ==='node node-start'){
-          setNodeGrid((prevGrid)=>({
-            mouseIsPressed: true,
-            isStartNode: true,
-            currRow: row,
-            currCol: col,
-          }));
-        }
-       setNodeGrid((prevGrid)=>({
+    setNodeGrid((prevGrid)=>({
          grid: getNewGridwithWallToggled(prevGrid.grid,row,col)
        }));
         mouseIsPressed.current=true;
         event.preventDefault();
-         
 
   },[]);
   const handleMouseEnter=useCallback((row,col)=>{
@@ -57,12 +50,11 @@ const NavigateBot = () => {
   }, []);
 
   const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {  
-    console.log("Length" + visitedNodesInOrder.length);     
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
         if(i===visitedNodesInOrder.length){
           setTimeout(()=>{
                animatedShortestPath(nodesInShortestPathOrder);  
-          },10);
+          },5);
           return;
         }
         console.log("insideLoop"+i);
@@ -73,15 +65,15 @@ const NavigateBot = () => {
           ...prevNodeGrid,
           grid: getNewGridWithVisited(prevNodeGrid.grid, node.row, node.col) // calls render
         }));
-      }, 10);
+      },5);
     }
   };
 
   const animatedShortestPath=(nodesInShortestPathOrder)=>{
-     for(let i=0;i<nodesInShortestPathOrder.length;i++){
+     for(let i=1;i<nodesInShortestPathOrder.length-1;i++){
        setTimeout(() => {
         const node=nodesInShortestPathOrder[i];
-          document.getElementById(`node-${node.row}-${node.col}`).className="node shortest-path";
+          document.getElementById(`node-${node.row}-${node.col}`).className="node node-shortest-path";
        }, i*100);
      }
   };
@@ -95,6 +87,48 @@ const NavigateBot = () => {
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);   
   };
+
+
+  // ---------------------------------------Astar Algo------------------------------------------------
+
+  const animateAstar = (visitedNodesInOrder, nodesInShortestPathOrder) => {  
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+        if(i===visitedNodesInOrder.length){
+          setTimeout(()=>{
+               animatedShortestPathAstar(nodesInShortestPathOrder);  
+          },5);
+          return;
+        }
+        console.log("insideLoop"+i);
+      setTimeout(() => {
+        console.log("inside Time Out"+i);
+        const node = visitedNodesInOrder[i];
+        setNodeGrid((prevNodeGrid) => ({
+          ...prevNodeGrid,
+          grid: getNewGridWithVisited(prevNodeGrid.grid, node.row, node.col) // calls render
+        }));
+      },5);
+    }
+  };
+
+  const animatedShortestPathAstar=(nodesInShortestPathOrder)=>{
+     for(let i=1;i<nodesInShortestPathOrder.length-1;i++){
+       setTimeout(() => {
+        const node=nodesInShortestPathOrder[i];
+          document.getElementById(`node-${node.row}-${node.col}`).className="node node-shortest-path";
+       }, i*100);
+     }
+  };
+
+  const visualizeAstar = () => {
+    const grid = _.cloneDeep(nodeGrid.grid);
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = astar(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrderAstar(finishNode);
+    animateAstar(visitedNodesInOrder, nodesInShortestPathOrder);   
+  };
+
 
   const clearWall=()=>{
     const newGrid = [...nodeGrid.grid];  
@@ -140,7 +174,8 @@ const NavigateBot = () => {
   //pfv
   return (
     <div>                                                
-     <NavbarReact visualizeDijkstra={visualizeDijkstra} clearWall={clearWall} clearPath={clearPath} clearBoard={clearBoard} />
+     <NavbarReact visualizeAstar={visualizeAstar}  visualizeDijkstra={visualizeDijkstra} clearWall={clearWall} clearPath={clearPath} clearBoard={clearBoard} />
+     {/* <Specifications/> */}
       <div className="grid-bot">
         {nodeGrid.grid.map((row, rowIdx) => {
           return (
@@ -168,7 +203,7 @@ const NavigateBot = () => {
       </div>
     </div>
   );
-};
+      };
 
 export default NavigateBot;
 
@@ -218,51 +253,3 @@ const getNewGridwithWallToggled=(grid,row,col)=>{
   newGrid[row][col]=newNode;
   return newGrid;
 };
-
-// const dynamicStartNode=(grid,row,col)=>{
-//   if (!this.state.isRunning) {
-//     if (this.state.mouseIsPressed) {
-//       const nodeClassName = document.getElementById(`node-${row}-${col}`)
-//         .className;
-//       if (this.state.isStartNode) {
-//         console.log("Start changes");
-//         if (nodeClassName !== 'node node-wall') {
-//           const prevStartNode = this.state.grid[this.state.currRow][
-//             this.state.currCol
-//           ];
-//           prevStartNode.isStart = false;
-//           document.getElementById(
-//             `node-${this.state.currRow}-${this.state.currCol}`,
-//           ).className = 'node';
-
-//           this.setState({currRow: row, currCol: col});
-//           const currStartNode = this.state.grid[row][col];
-//           currStartNode.isStart = true;
-//           document.getElementById(`node-${row}-${col}`).className =
-//             'node node-start';
-//         }
-//         this.setState({START_NODE_ROW: row, START_NODE_COL: col});
-//       } else if (this.state.isFinishNode) {
-//         if (nodeClassName !== 'node node-wall') {
-//           const prevFinishNode = this.state.grid[this.state.currRow][
-//             this.state.currCol
-//           ];
-//           prevFinishNode.isFinish = false;
-//           document.getElementById(
-//             `node-${this.state.currRow}-${this.state.currCol}`,
-//           ).className = 'node';
-
-//           this.setState({currRow: row, currCol: col});
-//           const currFinishNode = this.state.grid[row][col];
-//           currFinishNode.isFinish = true;
-//           document.getElementById(`node-${row}-${col}`).className =
-//             'node node-finish';
-//         }
-//         this.setState({FINISH_NODE_ROW: row, FINISH_NODE_COL: col});
-//       } else if (this.state.isWallNode) {
-//         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
-//         this.setState({grid: newGrid});
-//       }
-//     }
-  
-// };

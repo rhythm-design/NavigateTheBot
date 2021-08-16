@@ -6,12 +6,15 @@
 }
 
 .node-finish {
-  /* background-image:url('bot.jpg'); */
-  background-color: black;
+  background-image: url(../../images/house.png);
+    background-position: center;
+    background-size: cover;
 }
 
 .node-start {
-  background-color: green;
+    background-image: url(../../images/bot.png);
+    background-position: center;
+    background-size: cover;
 }
 
 .node-visited {
@@ -46,7 +49,7 @@
   }
 }
 
-.shortest-path {
+.node-shortest-path {
   background-color: #bd1616;
 }
 

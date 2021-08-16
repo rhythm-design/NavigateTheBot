@@ -12,6 +12,10 @@ function NavbarReact(props){
       document.getElementById("navigateUsingAlgo").innerHTML="Visualize Dijkstra";
       document.getElementById("navigateUsingAlgo").className="navigate-button visualizeColor";
       setAlgorithm("dijkstra");
+    }else if(eventKey==="astar"){
+      document.getElementById("navigateUsingAlgo").innerHTML="Visualize A-star";
+      document.getElementById("navigateUsingAlgo").className="navigate-button visualizeColor";
+      setAlgorithm("astar");
     }
   } 
     return(
@@ -45,8 +49,13 @@ function NavbarReact(props){
               </NavDropdown>
               <Nav.Link href="#speed" className="text-white nav-items-style">Speed</Nav.Link>
               <script type="text/javascript" src="../NavigateBot/NavigateBot.jsx"></script>
-              <button id="navigateUsingAlgo"  className="navigate-button" onClick={ ()=> algorithm==="dijkstra" ? `${props.visualizeDijkstra()}`:null} >Select Algorithm</button>
-              <Nav.Link href="#clear-board" className="text-white nav-items-style" href="">CLEAR BOARD</Nav.Link>
+              <button id="navigateUsingAlgo"  className="navigate-button" onClick={ ()=>
+               algorithm==="dijkstra" ?
+                `${props.visualizeDijkstra()}`:
+                algorithm==="astar" ?
+                 `${props.visualizeAstar()}`:
+                 null} >Select Algorithm</button>
+              <Nav.Link href="#clear-board" className="text-white nav-items-style" href="/">CLEAR BOARD</Nav.Link>
               <Nav.Link href="#clear-path" className="text-white nav-items-style" >CLEAR PATH</Nav.Link>
               <Nav.Link href="#clear-walls" className="text-white nav-items-style" href=" ">CLEAR WALLS</Nav.Link>
             </Nav>
