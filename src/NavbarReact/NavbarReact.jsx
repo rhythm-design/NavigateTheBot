@@ -7,7 +7,9 @@ import NavigateBot from "../NavigateBot/NavigateBot";
 
 function NavbarReact(props){
   const [algorithm,setAlgorithm]=useState("");
+  const [speed,setSpeed]=useState("medium");
   const handleSelect = (eventKey) =>{
+    console.log(eventKey);
     if(eventKey==="dijkstra"){
       document.getElementById("navigateUsingAlgo").innerHTML="Visualize Dijkstra";
       document.getElementById("navigateUsingAlgo").className="navigate-button visualizeColor";
@@ -16,6 +18,12 @@ function NavbarReact(props){
       document.getElementById("navigateUsingAlgo").innerHTML="Visualize A-star";
       document.getElementById("navigateUsingAlgo").className="navigate-button visualizeColor";
       setAlgorithm("astar");
+    }else if(eventKey==="low"){
+      setSpeed("low");
+    }else if(eventKey==="medium"){
+      setSpeed("medium");
+    }else if(eventKey==="high"){
+      setSpeed("high");
     }
   } 
     return(
@@ -47,7 +55,12 @@ function NavbarReact(props){
                 <NavDropdown.Item  eventKey="dijkstra" >Dijkstra's Algorithm</NavDropdown.Item>
                 <NavDropdown.Item  eventKey="astar" >Astar algo</NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link href="#speed" className="text-white nav-items-style">Speed</Nav.Link>
+              <NavDropdown  title={<span className="text-white">Speed</span>} className="basic-nav-dropdown nav-items-style">
+                <NavDropdown.Item  eventKey="low" >Low</NavDropdown.Item>
+                <NavDropdown.Item  eventKey="medium" >Medium</NavDropdown.Item>
+                <NavDropdown.Item  eventKey="high" >High</NavDropdown.Item>
+              </NavDropdown>
+              {/* <Nav.Link href="#speed" className="text-white nav-items-style">Speed</Nav.Link> */}
               <script type="text/javascript" src="../NavigateBot/NavigateBot.jsx"></script>
               <button id="navigateUsingAlgo"  className="navigate-button" onClick={ ()=>
                algorithm==="dijkstra" ?
