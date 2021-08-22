@@ -18,13 +18,16 @@ function NavbarReact(props){
       document.getElementById("navigateUsingAlgo").innerHTML="Visualize A-star";
       document.getElementById("navigateUsingAlgo").className="navigate-button visualizeColor";
       setAlgorithm("astar");
-    }else if(eventKey==="low"){
-      setSpeed("low");
-    }else if(eventKey==="medium"){
-      setSpeed("medium");
-    }else if(eventKey==="high"){
-      setSpeed("high");
     }
+    // else if(eventKey==="low"){
+    //   setSpeed("low");
+    // }else if(eventKey==="medium"){
+    //   setSpeed("medium");
+    // }else if(eventKey==="high"){
+    //   // // setSpeed("high");
+    //   // props.animateSpeed=50;
+    //   props.animateSpeed();
+    // }
   } 
     return(
       <>

@@ -8,6 +8,7 @@ import "./NavigateBot.css";
 
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
 import {astar,getNodesInShortestPathOrderAstar} from "../algorithms/astar.js";
+import Footer from "../Footer";
 
 let START_NODE_ROW = 5;
 let START_NODE_COL = 5;
@@ -15,6 +16,20 @@ let FINISH_NODE_ROW = 11;
 let FINISH_NODE_COL = 25;
 const TOTAL_ROWS = 18;
 const TOTAL_COLS = 54;
+let animateSpeed=10;
+let shortestAnimateSpeed=25;
+
+// const animateSpeed={
+//   low:10,
+//   medium:20,
+//   high:30
+// }
+function customSpeed(){
+  animateSpeed=50;
+  console.log(animateSpeed);
+  return animateSpeed;
+}
+
 
 const NavigateBot = () => {
   const [nodeGrid, setNodeGrid] = useState({
@@ -75,7 +90,7 @@ const NavigateBot = () => {
         if(i===visitedNodesInOrder.length){
           setTimeout(()=>{
                animatedShortestPath(nodesInShortestPathOrder);  
-          },25*(i+1));
+          },shortestAnimateSpeed);
           return;
         }
       setTimeout(() => {
@@ -193,6 +208,7 @@ const NavigateBot = () => {
     <div>                                                
      <NavbarReact visualizeAstar={visualizeAstar}  visualizeDijkstra={visualizeDijkstra} clearWall={clearWall} clearPath={clearPath} clearBoard={clearBoard} />
      {/* <Specifications/> */}
+     {/* animateSpeed={customSpeed} shortestAnimateSpeed={shortestAnimateSpeed} */}
       <div className="grid-bot">
         {nodeGrid.grid.map((row, rowIdx) => {
           return (

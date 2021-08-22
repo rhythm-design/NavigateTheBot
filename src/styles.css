@@ -2,3 +2,16 @@
   font-family: sans-serif;
   text-align: center;
 }
+.github-logo{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  opacity: 0.5;
+}
+
+.github-logo :hover {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  opacity: 1.0;
+}
