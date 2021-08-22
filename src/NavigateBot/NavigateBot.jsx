@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import Node from "./Node/Node";
 import NavbarReact from "../NavbarReact/NavbarReact";
-// import Specifications from "../Specifications/Specifications.jsx";
+import Specifications from "../Specifications/Specifications.jsx";
 import "./NavigateBot.css";
 
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
@@ -207,7 +207,7 @@ const NavigateBot = () => {
   return (
     <div>                                                
      <NavbarReact visualizeAstar={visualizeAstar}  visualizeDijkstra={visualizeDijkstra} clearWall={clearWall} clearPath={clearPath} clearBoard={clearBoard} />
-     {/* <Specifications/> */}
+     <Specifications/>
      {/* animateSpeed={customSpeed} shortestAnimateSpeed={shortestAnimateSpeed} */}
       <div className="grid-bot">
         {nodeGrid.grid.map((row, rowIdx) => {

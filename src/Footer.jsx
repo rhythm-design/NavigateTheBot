@@ -5,7 +5,7 @@ import GithubLogo from "./images/github.png";
 function Footer(){
     return(
         <div>
-        <a href="https://github.com/rhythm-design/NavigateTheBot">
+        <a href="https://github.com/rhythm-design/NavigateTheBot" target="_blank" rel="noreferrer noopener">
             <img
               src={GithubLogo}
               width="70"

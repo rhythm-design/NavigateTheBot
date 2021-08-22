@@ -1,0 +1,43 @@
+.node {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #a2dbfa;
+  }
+  .spec-bg-color{
+      display: flex;
+      justify-content: center;
+      background-color: #F1D1D0;
+  }
+  
+  .node-block {
+    display: inline-block;
+  }
+  
+  .node-finish-spec {
+    background-image: url(../images/house.png);
+      background-position: center;
+      background-size: cover;
+      border-style: hidden;
+      margin-right: 2px;
+  }
+  
+  .node-start-spec {
+    background-image: url(../images/bot.png);
+      background-position: center;
+      background-size: cover;
+      margin-right: 2px;
+  }
+  
+  .alig {
+      margin: 1rem 1rem 0 1rem;
+  }
+  
+  .node-wall-spec {
+    background-color: #368b85;
+    margin-right: 2px;
+  }
+  
+  .node-shortest-path-spec {
+    background-color: #bd1616;
+    margin-right: 2px;
+  }

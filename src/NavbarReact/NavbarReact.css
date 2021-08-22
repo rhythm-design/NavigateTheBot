@@ -53,8 +53,11 @@ navbar-logo-text{
  }
 
 .nav-items-style{
-    margin-left: 0.6rem;
-    margin-right: 0.6rem;
+  /* display: flex;
+  justify-content: center; */
+  justify-content: center;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .logo-photo{
