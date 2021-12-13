@@ -8,7 +8,6 @@ import "./NavigateBot.css";
 
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
 import {astar,getNodesInShortestPathOrderAstar} from "../algorithms/astar.js";
-import Footer from "../Footer";
 
 let START_NODE_ROW = 5;
 let START_NODE_COL = 5;
