@@ -71,9 +71,9 @@ function NavbarReact(props){
                 algorithm==="astar" ?
                  `${props.visualizeAstar()}`:
                  null} >Select Algorithm</button>
-              <Nav.Link href="#clear-board" className="text-white nav-items-style" href="/">CLEAR BOARD</Nav.Link>
-              <Nav.Link href="#clear-path" className="text-white nav-items-style" >CLEAR PATH</Nav.Link>
-              <Nav.Link href="#clear-walls" className="text-white nav-items-style" href=" ">CLEAR WALLS</Nav.Link>
+              <Nav.Link onClick={props.clearBoard} className="text-white nav-items-style">CLEAR BOARD</Nav.Link>
+              <Nav.Link onClick={props.clearPath} className="text-white nav-items-style">CLEAR PATH</Nav.Link>
+              <Nav.Link onClick={props.clearWall} className="text-white nav-items-style">CLEAR WALLS</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
