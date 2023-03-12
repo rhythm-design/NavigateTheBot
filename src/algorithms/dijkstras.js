@@ -7,6 +7,7 @@ import _ from "lodash";
 
 export const dijkstra = (gridCopy, startNode, finishNode) => {
   //const gridCopy = _.cloneDeep(grid);
+  let  visitedNodes=0;
   const visitedNodesInOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(gridCopy);
@@ -19,10 +20,12 @@ export const dijkstra = (gridCopy, startNode, finishNode) => {
     // we must be trapped and should therefore stop.
     if (closestNode.distance === Infinity) return visitedNodesInOrder;
     closestNode.isVisited = true;
+    visitedNodes++;
     visitedNodesInOrder.push(closestNode);
     if (closestNode === finishNode) return visitedNodesInOrder;
     updateUnvisitedNeighbors(closestNode, gridCopy);
   }
+  return visitedNodes
 };
 
 const sortNodesByDistance = unvisitedNodes => {

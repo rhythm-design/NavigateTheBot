@@ -6,6 +6,7 @@ export function astar(grid, startNode, finishNode) {
   }
   let unvisitedNodes = []; //open list
   let visitedNodesInOrder = []; //closed list
+  let visitedNodes=0
   startNode.distance = 0;
   unvisitedNodes.push(startNode);
 
@@ -15,6 +16,7 @@ export function astar(grid, startNode, finishNode) {
     if (closestNode === finishNode) return visitedNodesInOrder;
 
     closestNode.isVisited = true;
+    visitedNodes++
     visitedNodesInOrder.push(closestNode);
 
     let neighbours = getNeighbours(closestNode, grid);
@@ -35,7 +37,7 @@ export function astar(grid, startNode, finishNode) {
       }
     }
   }
-  return visitedNodesInOrder;
+  return visitedNodes
 }
 function getNeighbours(node, grid) {
   let neighbours = [];
