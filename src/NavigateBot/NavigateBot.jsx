@@ -4,6 +4,7 @@ import _ from "lodash";
 import Node from "./Node/Node";
 import NavbarReact from "../NavbarReact/NavbarReact";
 import Specifications from "../Specifications/Specifications.jsx";
+import NodeDiff from "./Node/NodeDiff";
 import "./NavigateBot.css";
 
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstras";
@@ -34,7 +35,6 @@ const NavigateBot = () => {
   const [nodeGrid, setNodeGrid] = useState({
     grid: []              
   });
-
   const mouseIsPressed=useRef(false);
   const specialNode=useRef("");
 
@@ -67,7 +67,11 @@ const NavigateBot = () => {
         START_NODE_COL=col;
         const grid2 = getInitialGrid();
         setNodeGrid({ ...nodeGrid, grid: grid2 });
+        document.getElementById("algo-data-astar").innerText=0   
+        document.getElementById("algo-data-dijkstra").innerText=0
       }else if(specialNode.current==="FINISH NODE"){
+        document.getElementById("algo-data-astar").innerText=0   
+        document.getElementById("algo-data-dijkstra").innerText=0
         FINISH_NODE_COL=col;
     FINISH_NODE_ROW=row;
     const grid2 = getInitialGrid();
@@ -118,7 +122,9 @@ const NavigateBot = () => {
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);   
+    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+   console.debug("dijkstra", visitedNodesInOrder);
+   document.getElementById("algo-data-dijkstra").innerText=visitedNodesInOrder.length
   };
 
 
@@ -158,6 +164,8 @@ const NavigateBot = () => {
     const visitedNodesInOrder = astar(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrderAstar(finishNode);
     animateAstar(visitedNodesInOrder, nodesInShortestPathOrder);   
+    console.debug("astar",visitedNodesInOrder)
+    document.getElementById("algo-data-astar").innerText=visitedNodesInOrder.length
   };
 
 
@@ -178,7 +186,10 @@ const NavigateBot = () => {
     setNodeGrid((prevNodeGrid) => ({
       ...prevNodeGrid,
       grid: newGrid
-    }));  
+    }));
+    document.getElementById("algo-data-astar").innerText=0   
+    document.getElementById("algo-data-dijkstra").innerText=0
+  
   }
   const clearPath=()=>{
     const newGrid = [...nodeGrid.grid];  
@@ -196,6 +207,10 @@ const NavigateBot = () => {
       ...prevNodeGrid,
       grid: newGrid
     }));  
+    if(document.getElementById("algo-data-astar").innerText!=0 && document.getElementById("algo-data-dijkstra").innerText!=0){
+      document.getElementById("algo-data-astar").innerText=0   
+      document.getElementById("algo-data-dijkstra").innerText=0
+    }
   }
 
   const clearBoard=()=>{
@@ -207,6 +222,7 @@ const NavigateBot = () => {
     <div>                                                
      <NavbarReact visualizeAstar={visualizeAstar}  visualizeDijkstra={visualizeDijkstra} clearWall={clearWall} clearPath={clearPath} clearBoard={clearBoard} />
      <Specifications/>
+     <NodeDiff />
      {/* animateSpeed={customSpeed} shortestAnimateSpeed={shortestAnimateSpeed} */}
       <div className="grid-bot">
         {nodeGrid.grid.map((row, rowIdx) => {
