@@ -125,6 +125,11 @@ const NavigateBot = () => {
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
    console.debug("dijkstra", visitedNodesInOrder);
    document.getElementById("algo-data-dijkstra").innerText=visitedNodesInOrder.length
+   const nodesVisitedByDijkstra=document.getElementById("algo-data-dijkstra").innerText
+    const nodesVisitedByAstar= document.getElementById("algo-data-astar").innerText
+    if( nodesVisitedByDijkstra!=0 && nodesVisitedByAstar!=0){
+      document.getElementById("algo-data-diff").innerText= Math.abs(nodesVisitedByDijkstra-nodesVisitedByAstar)
+    }
   };
 
 
@@ -166,6 +171,11 @@ const NavigateBot = () => {
     animateAstar(visitedNodesInOrder, nodesInShortestPathOrder);   
     console.debug("astar",visitedNodesInOrder)
     document.getElementById("algo-data-astar").innerText=visitedNodesInOrder.length
+    const nodesVisitedByDijkstra=document.getElementById("algo-data-dijkstra").innerText
+    const nodesVisitedByAstar= document.getElementById("algo-data-astar").innerText
+    if( nodesVisitedByDijkstra!=0 && nodesVisitedByAstar!=0){
+      document.getElementById("algo-data-diff").innerText= Math.abs(nodesVisitedByDijkstra-nodesVisitedByAstar)
+    }
   };
 
 
@@ -189,6 +199,7 @@ const NavigateBot = () => {
     }));
     document.getElementById("algo-data-astar").innerText=0   
     document.getElementById("algo-data-dijkstra").innerText=0
+    document.getElementById("algo-data-diff").innerText=0
   
   }
   const clearPath=()=>{
@@ -210,6 +221,7 @@ const NavigateBot = () => {
     if(document.getElementById("algo-data-astar").innerText!=0 && document.getElementById("algo-data-dijkstra").innerText!=0){
       document.getElementById("algo-data-astar").innerText=0   
       document.getElementById("algo-data-dijkstra").innerText=0
+      document.getElementById("algo-data-diff").innerText=0
     }
   }
 
