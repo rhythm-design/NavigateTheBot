@@ -90,28 +90,36 @@ const NavigateBot = () => {
 
   const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {  
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-        if(i===visitedNodesInOrder.length){
+        if(i===visitedNodesInOrder.length){  
           setTimeout(()=>{
-               animatedShortestPath(nodesInShortestPathOrder);  
+               animatedShortestPath(nodesInShortestPathOrder,visitedNodesInOrder);  
           },shortestAnimateSpeed);
           return;
         }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
+        document.getElementById("algo-data-dijkstra").innerText=parseInt( document.getElementById("algo-data-dijkstra").innerText)+1
         setNodeGrid((prevNodeGrid) => ({
           ...prevNodeGrid,
           grid: getNewGridWithVisited(prevNodeGrid.grid, node.row, node.col) // calls render
+          
         }));
       },10);
     }
   };
 
-  const animatedShortestPath=(nodesInShortestPathOrder)=>{
+  const animatedShortestPath=(nodesInShortestPathOrder,visitedNodesInOrder)=>{
      for(let i=1;i<nodesInShortestPathOrder.length-1;i++){
        setTimeout(() => {
         const node=nodesInShortestPathOrder[i];
           document.getElementById(`node-${node.row}-${node.col}`).className="node node-shortest-path";
        }, i*100);
+     }
+     document.getElementById("algo-data-dijkstra").innerText=visitedNodesInOrder.length
+     const nodesVisitedByDijkstra=document.getElementById("algo-data-dijkstra").innerText
+     const nodesVisitedByAstar= document.getElementById("algo-data-astar").innerText
+     if( nodesVisitedByDijkstra!=0 && nodesVisitedByAstar!=0){
+       document.getElementById("algo-data-diff").innerText= Math.abs(nodesVisitedByDijkstra-nodesVisitedByAstar)
      }
   };
 
@@ -124,12 +132,6 @@ const NavigateBot = () => {
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
    console.debug("dijkstra", visitedNodesInOrder);
-   document.getElementById("algo-data-dijkstra").innerText=visitedNodesInOrder.length
-   const nodesVisitedByDijkstra=document.getElementById("algo-data-dijkstra").innerText
-    const nodesVisitedByAstar= document.getElementById("algo-data-astar").innerText
-    if( nodesVisitedByDijkstra!=0 && nodesVisitedByAstar!=0){
-      document.getElementById("algo-data-diff").innerText= Math.abs(nodesVisitedByDijkstra-nodesVisitedByAstar)
-    }
   };
 
 
@@ -139,11 +141,12 @@ const NavigateBot = () => {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
         if(i===visitedNodesInOrder.length){
           setTimeout(()=>{
-               animatedShortestPathAstar(nodesInShortestPathOrder);  
+               animatedShortestPathAstar(nodesInShortestPathOrder,visitedNodesInOrder);  
           },5);
           return;
         }
       setTimeout(() => {
+        document.getElementById("algo-data-astar").innerText=parseInt(document.getElementById("algo-data-astar").innerText)+1
         const node = visitedNodesInOrder[i];
         setNodeGrid((prevNodeGrid) => ({
           ...prevNodeGrid,
@@ -153,13 +156,19 @@ const NavigateBot = () => {
     }
   };
 
-  const animatedShortestPathAstar=(nodesInShortestPathOrder)=>{
+  const animatedShortestPathAstar=(nodesInShortestPathOrder,visitedNodesInOrder)=>{
      for(let i=1;i<nodesInShortestPathOrder.length-1;i++){
        setTimeout(() => {
         const node=nodesInShortestPathOrder[i];
           document.getElementById(`node-${node.row}-${node.col}`).className="node node-shortest-path";
        }, i*100);
      }
+     document.getElementById("algo-data-astar").innerText=visitedNodesInOrder.length
+    const nodesVisitedByDijkstra=document.getElementById("algo-data-dijkstra").innerText
+    const nodesVisitedByAstar= document.getElementById("algo-data-astar").innerText
+    if( nodesVisitedByDijkstra!=0 && nodesVisitedByAstar!=0){
+      document.getElementById("algo-data-diff").innerText= Math.abs(nodesVisitedByDijkstra-nodesVisitedByAstar)
+    }
   };
 
   const visualizeAstar = () => {
@@ -170,12 +179,6 @@ const NavigateBot = () => {
     const nodesInShortestPathOrder = getNodesInShortestPathOrderAstar(finishNode);
     animateAstar(visitedNodesInOrder, nodesInShortestPathOrder);   
     console.debug("astar",visitedNodesInOrder)
-    document.getElementById("algo-data-astar").innerText=visitedNodesInOrder.length
-    const nodesVisitedByDijkstra=document.getElementById("algo-data-dijkstra").innerText
-    const nodesVisitedByAstar= document.getElementById("algo-data-astar").innerText
-    if( nodesVisitedByDijkstra!=0 && nodesVisitedByAstar!=0){
-      document.getElementById("algo-data-diff").innerText= Math.abs(nodesVisitedByDijkstra-nodesVisitedByAstar)
-    }
   };
 
 

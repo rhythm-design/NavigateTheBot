@@ -9,9 +9,17 @@
   h5{
     display: inline;
   }
-  #fix-dom{
+  #algo-div{
     display: inline;
+    margin-right: 2rem;
+    margin-left: 1vh;
   }
+
+  #algo-data-astar, #algo-data-diff, #algo-data-dijkstra{
+    overflow: hidden;
+    position: fixed;
+  }
+
 
   #algo-data{
     margin-left: 15px;
