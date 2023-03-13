@@ -22,7 +22,7 @@
 ## About The Project
 
 
-![Untitled design](https://user-images.githubusercontent.com/56234578/224162813-f8bca444-abf3-4dcc-849d-80d8f82563be.gif)
+![Untitled design](./src/images/sample.gif)
 
 This is an intelligent virtual bot capable of finding the shortest path to a destination using MERN Stack and Data Structures and Algorithms. This project comes from Google Maps ability to navigate traffic and provide efficient routes.
 
