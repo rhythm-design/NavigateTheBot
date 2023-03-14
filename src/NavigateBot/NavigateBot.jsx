@@ -229,7 +229,8 @@ const NavigateBot = () => {
   }
 
   const clearBoard=()=>{
-    window.location.reload(false);
+    const grid1 = getInitialGrid();
+    setNodeGrid({ ...nodeGrid, grid: grid1 });
   };
 
   //pfv
