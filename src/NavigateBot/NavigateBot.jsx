@@ -231,6 +231,9 @@ const NavigateBot = () => {
   const clearBoard=()=>{
     const grid1 = getInitialGrid();
     setNodeGrid({ ...nodeGrid, grid: grid1 });
+    document.getElementById("algo-data-astar").innerText=0   
+    document.getElementById("algo-data-dijkstra").innerText=0
+    document.getElementById("algo-data-diff").innerText=0
   };
 
   //pfv
