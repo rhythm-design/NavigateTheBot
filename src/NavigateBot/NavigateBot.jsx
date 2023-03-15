@@ -26,7 +26,7 @@ let shortestAnimateSpeed=25;
 // }
 function customSpeed(){
   animateSpeed=50;
-  console.log(animateSpeed);
+  // console.log(animateSpeed);
   return animateSpeed;
 }
 
@@ -324,10 +324,12 @@ const getNewGridWithVisited = (grid, row, col) => {
 const getNewGridwithWallToggled=(grid,row,col)=>{
   const newGrid = [...grid];  
   const node1 = newGrid[row][col];
-  const newNode = {
-    ...node1,
-    isWall: true  
-  };
-  newGrid[row][col]=newNode;
+  if(!node1.isVisited && !node1.isStart && !node1.isFinish){
+    const newNode = {
+      ...node1,
+      isWall: !node1.isWall
+    };
+    newGrid[row][col]=newNode;
+  }
   return newGrid;
 };
