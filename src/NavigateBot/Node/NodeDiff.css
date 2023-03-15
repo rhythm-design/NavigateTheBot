@@ -17,7 +17,7 @@
 
   #algo-data-astar, #algo-data-diff, #algo-data-dijkstra{
     overflow: hidden;
-    position: fixed;
+    position: absolute;
   }
 
 

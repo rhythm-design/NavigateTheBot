@@ -44,6 +44,9 @@ const NavigateBot = () => {
     window.addEventListener("mouseup",()=>{mouseIsPressed.current=false});
   }, []);
 
+  const [dijkstraNodes,setDijkstraNodes]= useState(0)
+  const [astarNodes,setAstarNodes]= useState(0)
+
   const handleMouseDown=useCallback((event,row,col)=>{
     setNodeGrid((prevGrid)=>({
          grid: getNewGridwithWallToggled(prevGrid.grid,row,col)
@@ -89,6 +92,7 @@ const NavigateBot = () => {
   }, []);
 
   const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {  
+    setDijkstraNodes(0)
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
         if(i===visitedNodesInOrder.length){  
           setTimeout(()=>{
@@ -98,7 +102,10 @@ const NavigateBot = () => {
         }
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
-        document.getElementById("algo-data-dijkstra").innerText=parseInt( document.getElementById("algo-data-dijkstra").innerText)+1
+        setDijkstraNodes((dijkstraNodes)=>{
+          document.getElementById("algo-data-dijkstra").innerText=dijkstraNodes
+          return dijkstraNodes+1
+        })
         setNodeGrid((prevNodeGrid) => ({
           ...prevNodeGrid,
           grid: getNewGridWithVisited(prevNodeGrid.grid, node.row, node.col) // calls render
@@ -138,6 +145,7 @@ const NavigateBot = () => {
   // ---------------------------------------Astar Algo------------------------------------------------
 
   const animateAstar = (visitedNodesInOrder, nodesInShortestPathOrder) => {  
+    setAstarNodes(0)
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
         if(i===visitedNodesInOrder.length){
           setTimeout(()=>{
@@ -146,7 +154,10 @@ const NavigateBot = () => {
           return;
         }
       setTimeout(() => {
-        document.getElementById("algo-data-astar").innerText=parseInt(document.getElementById("algo-data-astar").innerText)+1
+        setAstarNodes((astarNodes)=>{
+          document.getElementById("algo-data-astar").innerText=astarNodes
+          return astarNodes+1
+        })
         const node = visitedNodesInOrder[i];
         setNodeGrid((prevNodeGrid) => ({
           ...prevNodeGrid,
