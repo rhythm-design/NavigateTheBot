@@ -19,14 +19,8 @@ const TOTAL_COLS = 54;
 let animateSpeed=10;
 let shortestAnimateSpeed=25;
 
-// const animateSpeed={
-//   low:10,
-//   medium:20,
-//   high:30
-// }
 function customSpeed(){
   animateSpeed=50;
-  // console.log(animateSpeed);
   return animateSpeed;
 }
 
@@ -46,6 +40,8 @@ const NavigateBot = () => {
 
   const [dijkstraNodes,setDijkstraNodes]= useState(0)
   const [astarNodes,setAstarNodes]= useState(0)
+  const [shortestDijkstra,setShortestDijkstra]= useState(0)
+  const [shortestAstar,setShortestAstar]=useState(0)
 
   const handleMouseDown=useCallback((event,row,col)=>{
     setNodeGrid((prevGrid)=>({
@@ -63,18 +59,15 @@ const NavigateBot = () => {
 
   },[]);
   const handleMouseEnter=useCallback((row,col)=>{
-    // alert("mouse enter the node at row:" + row +" and col : "+ col);
     if(mouseIsPressed.current===true){ 
       if( specialNode.current==="START NODE"){
         START_NODE_ROW=row;
         START_NODE_COL=col;
         const grid2 = getInitialGrid();
         setNodeGrid({ ...nodeGrid, grid: grid2 });
-        document.getElementById("algo-data-astar").innerText=0   
-        document.getElementById("algo-data-dijkstra").innerText=0
+        resetValues()
       }else if(specialNode.current==="FINISH NODE"){
-        document.getElementById("algo-data-astar").innerText=0   
-        document.getElementById("algo-data-dijkstra").innerText=0
+        resetValues()
         FINISH_NODE_COL=col;
     FINISH_NODE_ROW=row;
     const grid2 = getInitialGrid();
@@ -116,8 +109,13 @@ const NavigateBot = () => {
   };
 
   const animatedShortestPath=(nodesInShortestPathOrder,visitedNodesInOrder)=>{
+    setShortestDijkstra(1);
      for(let i=1;i<nodesInShortestPathOrder.length-1;i++){
        setTimeout(() => {
+        setShortestDijkstra((shortestDijkstra)=>{
+          document.getElementById("algo-data-shortest-path").innerText=shortestDijkstra
+          return shortestDijkstra+1
+        })
         const node=nodesInShortestPathOrder[i];
           document.getElementById(`node-${node.row}-${node.col}`).className="node node-shortest-path";
        }, i*100);
@@ -168,8 +166,13 @@ const NavigateBot = () => {
   };
 
   const animatedShortestPathAstar=(nodesInShortestPathOrder,visitedNodesInOrder)=>{
+    setShortestAstar(1)
      for(let i=1;i<nodesInShortestPathOrder.length-1;i++){
        setTimeout(() => {
+        setShortestAstar((shortestAstar)=>{
+          document.getElementById("algo-data-shortest-path").innerText=shortestAstar
+          return shortestAstar+1
+        })
         const node=nodesInShortestPathOrder[i];
           document.getElementById(`node-${node.row}-${node.col}`).className="node node-shortest-path";
        }, i*100);
@@ -211,9 +214,7 @@ const NavigateBot = () => {
       ...prevNodeGrid,
       grid: newGrid
     }));
-    document.getElementById("algo-data-astar").innerText=0   
-    document.getElementById("algo-data-dijkstra").innerText=0
-    document.getElementById("algo-data-diff").innerText=0
+    resetValues()
   
   }
   const clearPath=()=>{
@@ -232,6 +233,7 @@ const NavigateBot = () => {
       ...prevNodeGrid,
       grid: newGrid
     }));  
+    document.getElementById("algo-data-shortest-path").innerText=0
     if(document.getElementById("algo-data-astar").innerText!=0 && document.getElementById("algo-data-dijkstra").innerText!=0){
       document.getElementById("algo-data-astar").innerText=0   
       document.getElementById("algo-data-dijkstra").innerText=0
@@ -242,9 +244,7 @@ const NavigateBot = () => {
   const clearBoard=()=>{
     const grid1 = getInitialGrid();
     setNodeGrid({ ...nodeGrid, grid: grid1 });
-    document.getElementById("algo-data-astar").innerText=0   
-    document.getElementById("algo-data-dijkstra").innerText=0
-    document.getElementById("algo-data-diff").innerText=0
+    resetValues()
   };
 
   //pfv
@@ -309,6 +309,12 @@ const createNode = (col, row) => {
     previousNode: null
   };
 };
+function resetValues(){
+  document.getElementById("algo-data-astar").innerText=0   
+  document.getElementById("algo-data-dijkstra").innerText=0
+  document.getElementById("algo-data-diff").innerText=0
+  document.getElementById("algo-data-shortest-path").innerText=0
+}
 const getNewGridWithVisited = (grid, row, col) => {
   // const newGrid = grid.slice();  
   const newGrid = [...grid];  

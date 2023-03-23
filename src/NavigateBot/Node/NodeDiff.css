@@ -11,11 +11,11 @@
   }
   #algo-div{
     display: inline;
-    margin-right: 2rem;
+    margin-right: 1rem;
     margin-left: 1vh;
   }
 
-  #algo-data-astar, #algo-data-diff, #algo-data-dijkstra{
+  #algo-data-astar, #algo-data-diff, #algo-data-dijkstra, #algo-data-shortest-path{
     overflow: hidden;
     position: absolute;
   }
